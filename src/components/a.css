@@ -1,0 +1,72 @@
+.CardContent{
+  color: white;
+  height: 100%;
+  position:relative;
+  cursor: pointer;
+  padding: 30px;
+  transition: 300ms;
+
+  &:hover, &:active
+  {
+      background-color: darkblue;
+
+      .ViewButton
+      {
+          background-color: grey;
+          color: darkred;
+      }
+  }
+  .Title
+  {
+      font-size: 30px;
+      font-weight: 500;
+      color: white;
+  }
+
+  .Caption
+  {
+      margin-top: 10px;
+      font-size: 18px;
+      color: white;
+  }
+
+  .ViewButton
+  {
+      margin-top: 40px;
+      color: white;
+
+      font-size: 25px;
+      border: 3px solid white;
+      text-transform: capitalize;
+
+      transition: 200ms;
+  }
+}
+
+.lala{
+}
+
+.lala.rotateDown{
+    animation: spinDown 50s linear infinite
+}
+
+.lala.rotateUp{
+    animation: spinUp 50s linear infinite
+}
+
+@keyframes spinUp {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0);
+  }
+}
+@keyframes spinDown {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
