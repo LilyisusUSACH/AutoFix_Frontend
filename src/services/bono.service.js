@@ -11,4 +11,8 @@ const postNewBono = (data) => {
     return httpClient.post('/api/bono/',data);
 }
 
+const lala = (data) => {
+    return httpClient.get('lala')
+;}
+
 export default {getBonos, getBonosUsados, postNewBono};
