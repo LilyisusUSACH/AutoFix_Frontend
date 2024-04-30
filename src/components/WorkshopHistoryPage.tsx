@@ -175,6 +175,7 @@ const VirtuosoTableComponents: TableComponents<Reparation> = {
     />
   ),
   TableHead,
+      // @ts-ignore
   TableRow: ExpandableRow,
   TableBody: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
     <TableBody {...props} ref={ref} />

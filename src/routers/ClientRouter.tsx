@@ -14,6 +14,7 @@ const theme = createTheme({
       fontFamily: "judson",
     },
   },
+  // @ts-ignore
   palette: {
     black: {
       main: "#000000",
@@ -25,6 +26,7 @@ const theme = createTheme({
       main: "#5a5a5a",
     },
     grey: {
+      // @ts-ignore
       main: "#d9d9d9",
     },
     white: {

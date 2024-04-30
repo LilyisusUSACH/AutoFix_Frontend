@@ -14,7 +14,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 
 const NewVehiclePage = () => {
-  const [vehiculo, setVehicle] = useState<Vehicle>({
+  const [vehiculo, setVehicle] = useState({
     patente: '',
     marca:'',
     modelo:'',

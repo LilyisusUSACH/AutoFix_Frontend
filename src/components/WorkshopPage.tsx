@@ -85,7 +85,7 @@ const columns: ColumnData[] = [
 ];
 // TODO: poner botones y crear los update / delete
 // TODO: arreglar fuentes
-const Fila = (props: { style: object; index: number; row: Reparation, onComplete:unknown, onCancel:unknown }) => {
+const Fila = (props: { style: object; index: number; row: Reparation, onComplete: () => void, onCancel: () => void }) => {
   const { style, index, row, onComplete, onCancel } = props;
   //console.log(typeof(onComplete));
   return (

@@ -11,9 +11,11 @@ import {
 import "./a.css";
 import Carousel from "react-material-ui-carousel";
 import "../style/Example.scss";
-import Img from "../assets/imgs/ElectricidadAuto.jpg";
+import Img from "../imgs/ElectricidadAuto.jpg";
 import { Link } from "react-router-dom";
 import { repTypes } from "../constants";
+
+
 
 type Item = {
   Name: string;
@@ -125,11 +127,11 @@ const items: Item[] = [
     Items: [
       {
         Name: "Taller Vehiculos",
-        Image: "src/assets/imgs/VehiculosTaller.jpg",
+        Image: "imgs/VehiculosTaller.jpg",
       },
       {
         Name: "Taller Vehiculos 2",
-        Image: "src/assets/imgs/taller3.jpeg",
+        Image: "imgs/taller3.jpeg",
       },
     ],
   },
@@ -144,11 +146,11 @@ const items: Item[] = [
     Items: [
       {
         Name: "Reparacion motores",
-        Image: "src/assets/imgs/ReparandoMotor.jpg",
+        Image: "imgs/ReparandoMotor.jpg",
       },
       {
         Name: "Learus Vacuum Cleaner",
-        Image: "src/assets/imgs/Taller2.jpg",
+        Image: "imgs/Taller2.jpg",
       },
     ],
   },
@@ -163,11 +165,11 @@ const items: Item[] = [
     Items: [
       {
         Name: "Herramientas taller",
-        Image: "src/assets/imgs/Taller4.jpeg",
+        Image: "imgs/taller4.jpeg",
       },
       {
         Name: "Floral Vase",
-        Image: "src/assets/imgs/ubicacion.png",
+        Image: "imgs/ubicacion.png",
       },
     ],
   },

@@ -35,7 +35,7 @@ const NavBar = () => {
             <Box sx={{ display: "flex", alignItems: "center" }}>
               {pages.map((page) => (
                 <Link key={page} to={`/` + page}>
-                  <Button color="white" key={page} sx={{ marginX: 1 }}>
+                  <Button key={page} sx={{ marginX: 1 }}>
                     <Typography
                       sx={{
                         color: "white.main",

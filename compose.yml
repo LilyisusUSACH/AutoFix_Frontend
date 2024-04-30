@@ -1,0 +1,73 @@
+version: "3.8"
+# PARA HACER BUILD
+# docker buildx build --push --platform linux/amd64,linux/arm64 -t lilyisus/autofixcarehub  -f Dockerfile .  
+services:
+  # Frontend services
+  frontend1:
+    image: lilyisus/autofixcarehub:latest
+    networks:
+      - frontend-network
+
+  frontend2:
+    image: lilyisus/autofixcarehub:latest
+    networks:
+      - frontend-network
+
+  frontend3:
+    image: lilyisus/autofixcarehub:latest
+    networks:
+      - frontend-network
+
+  # Backend services
+  backend1:
+    image: lilyisus/autofixcarehubbackend:latest
+    environment:
+      - DB_HOST=192.168.100.214
+    networks:
+      - backend-network
+
+  backend2:
+    image: lilyisus/autofixcarehubbackend:latest
+    environment:
+      - DB_HOST=192.168.100.214
+    networks:
+      - backend-network
+
+  backend3:
+    image: lilyisus/autofixcarehubbackend:latest
+    environment:
+      - DB_HOST=192.168.100.214
+    networks:
+      - backend-network
+
+  # Nginx for frontend load balancing
+  nginx-frontend:
+    image: nginx:latest
+    ports:
+      - "8070:80"
+    volumes:
+      - ./nginx-frontend.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend1
+      - frontend2
+      - frontend3
+    networks:
+      - frontend-network
+
+  # Nginx for backend load balancing
+  nginx-backend:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx-backend.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
+    networks:
+      - backend-network
+
+networks:
+  frontend-network:
+  backend-network:

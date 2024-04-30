@@ -1,14 +1,15 @@
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
-import { ThemeProvider, createTheme } from '@mui/material';
-import NavBarVariant from '../components/NavBarVariant';
-import MyVehiclePage from '../components/MyVehiclePage';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material";
+import NavBarVariant from "../components/NavBarVariant";
+import MyVehiclePage from "../components/MyVehiclePage";
 
 const theme = createTheme({
-    typography:{
-        allVariants:{
-            fontFamily:'judson'
-        }
+  typography: {
+    allVariants: {
+      fontFamily: "judson",
     },
+  },
+  // @ts-ignore
   palette: {
     black: {
       main: "#000000",
@@ -17,6 +18,7 @@ const theme = createTheme({
       main: "#ffd700",
     },
     grey: {
+      // @ts-ignore
       main: "#d9d9d9",
     },
     white: {
@@ -29,16 +31,16 @@ const theme = createTheme({
 });
 
 const MyVehicleRouter = () => {
-    return (
-        <ThemeProvider theme={theme}>
-        <div className=''>
-            <NavBarVariant/>
-            <Routes>
-                <Route path='*' element={<MyVehiclePage/>}/>
-            </Routes>
-        </div>
-        </ThemeProvider>
-    );
-}
+  return (
+    <ThemeProvider theme={theme}>
+      <div className="">
+        <NavBarVariant />
+        <Routes>
+          <Route path="*" element={<MyVehiclePage />} />
+        </Routes>
+      </div>
+    </ThemeProvider>
+  );
+};
 
 export default MyVehicleRouter;

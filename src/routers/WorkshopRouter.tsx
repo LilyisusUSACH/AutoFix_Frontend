@@ -8,14 +8,16 @@ import React from 'react';
 import NewVehiclePage from '../components/NewVehiclePage';
 import WorkshopHistoryPage from '../components/WorkshopHistoryPage';
 
-
+// @ts-ignore
 const theme = createTheme({
     typography: {
       allVariants: {
         fontFamily: "judson",
       },
     },
+    // @ts-ignore
     palette: {
+      // @ts-ignore
       black:{
         main: "#000000",
       },
