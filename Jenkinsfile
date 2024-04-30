@@ -17,6 +17,7 @@ pipeline{
                     }
                 }
             }
+        }
         stage("Build and Push Docker"){
             steps{
                 dir("./"){
