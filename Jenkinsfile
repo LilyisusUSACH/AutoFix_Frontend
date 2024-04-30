@@ -5,7 +5,7 @@ pipeline{
             steps{
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/LilyisusUSACH/AutoFix_Frontend.git']])
                 dir("./"){
-                    sh "sh ./npm install"
+                    sh "npm install"
                 }
             }
         }
@@ -13,7 +13,7 @@ pipeline{
             steps{
                 dir("./"){
                     script{
-                        sh "sh ./npm run build"
+                        sh "npm run build"
                     }
                 }
             }
