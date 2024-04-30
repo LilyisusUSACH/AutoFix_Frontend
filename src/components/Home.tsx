@@ -187,7 +187,7 @@ const Home = () => {
       }}
     >
       <Typography variant="h3">
-        Somos los N°1 en Reparaciones Automovilisticas
+        Somos el top 1 en Reparaciones Automovilisticas
       </Typography>
       <Carousel
         className="Example"
