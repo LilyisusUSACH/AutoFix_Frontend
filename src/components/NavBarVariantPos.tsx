@@ -1,5 +1,4 @@
 import logoiconYellow from "../assets/logoiconYellow.svg";
-import logoiconBlack from "../assets/logoiconBlack.svg";
 import logoiconWhite from "../assets/logoiconWhite.svg"
 import {
   AppBar,

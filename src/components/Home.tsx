@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -11,11 +10,7 @@ import {
 import "./a.css";
 import Carousel from "react-material-ui-carousel";
 import "../style/Example.scss";
-import Img from "../imgs/ElectricidadAuto.jpg";
 import { Link } from "react-router-dom";
-import { repTypes } from "../constants";
-
-
 
 type Item = {
   Name: string;

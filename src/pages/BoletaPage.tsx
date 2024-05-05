@@ -1,24 +1,18 @@
 import Checkbox from "@mui/material/Checkbox";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { formatCurrency, formatPhrase } from "../utils/utils";
 import {
-  Autocomplete,
-  Box,
   Button,
   Dialog,
   DialogTitle,
   Divider,
   Grid,
   IconButton,
-  InputBase,
   List,
-  ListItem,
   ListItemButton,
   ListItemText,
   Paper,
-  Popover,
   Table,
   TableBody,
   TableCell,
@@ -29,12 +23,10 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { light } from "@mui/material/styles/createPalette";
 import { useEffect, useState } from "react";
-import { Label, Translate } from "@mui/icons-material";
 import SendIcon from "@mui/icons-material/Send";
 import receiptService from "../services/receipt.service";
-import { Bono, Details, Receipt, Vehicle } from "../types/types";
+import { Bono, Receipt } from "../types/types";
 import { repTypes } from "../constants";
 
 const BoletaPage = () => {
@@ -44,7 +36,6 @@ const BoletaPage = () => {
   const [uncomplete, setUncomplete] = useState(false);
   const [datos, setDatos] = useState<Receipt>();
   const [mostrarPantallaCompleta, setMostrarPantallaCompleta] = useState(false);
-  const [bonoSeleccionado, setBonoSeleccionado] = useState<Bono>();
   const [checked, setChecked] = useState(false);
   const [selectBoleta, setSelectBoleta] = useState(false);
   const [bonosDisponibles, setBonosDisponibles] = useState<Bono[]>([]);

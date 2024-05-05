@@ -1,9 +1,7 @@
 import {
   Box,
-  Collapse,
   Divider,
   Grid,
-  IconButton,
   InputAdornment,
   Paper,
   Table,
@@ -17,9 +15,8 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect, useState } from "react";
-import { repTypes } from "../constants";
 import { TableComponents, TableVirtuoso } from "react-virtuoso";
-import { Reparation, ColumnData, Receipt } from "../types/types";
+import { ColumnData, Receipt } from "../types/types";
 import receiptService from "../services/receipt.service";
 import { formatCurrency } from "../utils/utils";
 

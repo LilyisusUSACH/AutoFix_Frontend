@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Collapse,
   Divider,
   Grid,
@@ -19,19 +18,13 @@ import {
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import CarRepairIcon from "@mui/icons-material/CarRepair";
-import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
-import MenuItem from "@mui/material/MenuItem";
-import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import workshopService from "../services/workshop.service";
 import { repTypes } from "../constants";
 import { TableComponents, TableVirtuoso } from "react-virtuoso";
-import { Link, useNavigate } from "react-router-dom";
-import { closeSnackbar, enqueueSnackbar, VariantType } from "notistack";
-import { Reparation, Vehicle, ColumnData } from "../types/types";
+import { Link } from "react-router-dom";
+import { Reparation, ColumnData } from "../types/types";
 import { formatCurrency } from "../utils/utils";
 
 // TODO: Separar Por componentes lo que se pueda

@@ -10,8 +10,6 @@ import {
   IconButton,
   InputAdornment,
   Paper,
-  Snackbar,
-  SnackbarCloseReason,
   Table,
   TableBody,
   TableCell,
@@ -30,9 +28,9 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import workshopService from "../services/workshop.service";
 import { repTypes } from "../constants";
 import { TableComponents, TableVirtuoso } from "react-virtuoso";
-import { Link, useNavigate } from "react-router-dom";
-import { closeSnackbar, enqueueSnackbar, VariantType } from "notistack";
-import { Reparation, Vehicle, ColumnData } from "../types/types";
+import { Link } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
+import { Reparation, ColumnData } from "../types/types";
 
 // TODO: Separar Por componentes lo que se pueda
 

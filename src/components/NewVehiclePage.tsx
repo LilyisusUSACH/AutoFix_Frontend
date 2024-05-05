@@ -7,10 +7,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ChangeEvent, PointerEvent, SelectHTMLAttributes, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Vehicle } from '../types/types';
 import vehicleService from "../services/vehicle.service";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 
 const NewVehiclePage = () => {

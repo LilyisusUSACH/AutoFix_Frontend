@@ -1,7 +1,6 @@
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Button, Grid, Typography } from "@mui/material";
-import { Brightness1 } from "@mui/icons-material";
 
 const ContactosPage = () => {
   return (

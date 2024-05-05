@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, Grid } from "@mui/material";
 import backImg from "../assets/engranaje.png";
 import "./a.css";

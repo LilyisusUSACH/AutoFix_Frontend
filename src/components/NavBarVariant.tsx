@@ -1,10 +1,7 @@
-import logoiconYellow from "../assets/logoiconYellow.svg";
 import logoiconBlack from "../assets/logoiconBlack.svg";
 import {
   AppBar,
   Box,
-  Button,
-  Container,
   Toolbar,
   Typography,
 } from "@mui/material";
