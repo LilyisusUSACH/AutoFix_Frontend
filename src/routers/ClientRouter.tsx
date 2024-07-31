@@ -7,6 +7,7 @@ import { green } from "@mui/material/colors";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import ServiciosPage from "../components/ServiciosPage";
 import ContactosPage from "../components/ContactosPage";
+import { ExamplePage } from "../pages/examplePage";
 
 const theme = createTheme({
   typography: {
@@ -41,7 +42,7 @@ const theme = createTheme({
 const ClientRouter = () => {
   return (
     <ThemeProvider theme={theme}>
-      <div className="">
+      <div style={{display:"grid", gridTemplateRows:"min-content auto"}}>
         <NavBar />
         <HelloWorld>
           <Routes>

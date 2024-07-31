@@ -19,7 +19,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import MenuItem from '@mui/material/MenuItem';
+import MenuItem from "@mui/material/MenuItem";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import CheckIcon from "@mui/icons-material/Check";
@@ -30,20 +30,15 @@ import { repTypes } from "../constants";
 import { TableComponents, TableVirtuoso } from "react-virtuoso";
 import { Link } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
-import { Reparation, ColumnData } from "../types/types";
+import { Reparation, ColumnData, RegReparation, Receipt } from "../types/types";
+import { formatCurrency, formatDateTime } from "../utils/utils";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
-// TODO: Separar Por componentes lo que se pueda
-
-const VirtuosoTableComponents: TableComponents<Reparation> = {
+const VirtuosoTableComponents: TableComponents<RegReparation> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
     <TableContainer component={Box} {...props} ref={ref} />
   )),
-  Table: (props) => (
-    <Table
-      {...props}
-      sx={{ borderCollapse: "separate", tableLayout: "fixed" }}
-    />
-  ),
+  Table: (props) => <Table {...props} />,
   TableHead,
   TableRow: ({ item: _item, ...props }) => <TableRow {...props} />,
   TableBody: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
@@ -53,70 +48,96 @@ const VirtuosoTableComponents: TableComponents<Reparation> = {
 
 const columns: ColumnData[] = [
   {
-    width: 40,
     label: "Patente",
   },
   {
-    width: 80,
-    label: "Marca",
+    label: "Recibo",
   },
   {
-    width: 50,
-    label: "Modelo",
-  },
-  {
-    width: 150,
     label: "Tipo de reparacion",
   },
   {
-    width: 80,
+    label: "Monto",
+  },
+  {
     label: "Fecha inicio",
   },
   {
-    width: 40,
     label: "Completar",
   },
   {
-    width: 40,
     label: "Cancelar",
   },
 ];
-// TODO: poner botones y crear los update / delete
-// TODO: arreglar fuentes
-const Fila = (props: { style: object; index: number; row: Reparation, onComplete: () => void, onCancel: () => void }) => {
-  const { style, index, row, onComplete, onCancel } = props;
-  //console.log(typeof(onComplete));
+
+const Fila = (props: {
+  index: number;
+  row: RegReparation;
+  onComplete: () => void;
+  onCancel: () => void;
+}) => {
+  const { index, row, onComplete, onCancel } = props;
   return (
     <>
-      <TableCell sx={style} align="center" component="th" scope="row">
-        {row.vehiculo.patente.toUpperCase()}
+      <TableCell
+        sx={{ background: index % 2 == 0 ? "lightgrey" : "white" }}
+        align="center"
+      >
+        {row.patente.toUpperCase()}
       </TableCell>
       <TableCell
         sx={{ background: index % 2 == 0 ? "lightgrey" : "white" }}
         align="center"
       >
-        {row.vehiculo.marca.toUpperCase()}
+        <Link to={"/pos/boletas/" + row.receipt}>
+          <IconButton
+            size="medium"
+            aria-label="complete"
+            onClick={() =>
+              enqueueSnackbar("Se envió hacia el recibo", { variant: "info" })
+            }
+            sx={{
+              borderRadius: "40px",
+              backgroundColor: "#00A3FFc0",
+              width: "60px",
+              height: "40px",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#00A3FFA0",
+                filter: "brightness(120%)",
+              },
+            }}
+          >
+            <InfoOutlinedIcon fontSize="large" />
+          </IconButton>
+        </Link>
       </TableCell>
       <TableCell
         sx={{ background: index % 2 == 0 ? "lightgrey" : "white" }}
         align="center"
       >
-        {row.vehiculo.modelo.toUpperCase()}
+        {row.reparation?.nombre}
+      </TableCell>
+      <TableCell
+        sx={{
+          background: index % 2 == 0 ? "lightgrey" : "white",
+          fontWeight: "800",
+        }}
+        align="center"
+      >
+        {formatCurrency(row.amount)}
       </TableCell>
       <TableCell
         sx={{ background: index % 2 == 0 ? "lightgrey" : "white" }}
         align="center"
       >
-        {repTypes[row.typeRep-1]}
+        {formatDateTime(row.createdAt)}
       </TableCell>
       <TableCell
-        sx={{ background: index % 2 == 0 ? "lightgrey" : "white" }}
-        align="center"
-      >
-        {row.fechaIngreso + " " + row.horaIngreso.slice(0, 5)}
-      </TableCell>
-      <TableCell
-        sx={{ background: index % 2 == 0 ? "lightgrey" : "white" }}
+        sx={{
+          background: index % 2 == 0 ? "lightgrey" : "white",
+          overflow: "auto",
+        }}
         align="center"
       >
         <IconButton
@@ -124,14 +145,15 @@ const Fila = (props: { style: object; index: number; row: Reparation, onComplete
           aria-label="complete"
           onClick={onComplete}
           sx={{
-            marginBlock: "-10px",
-            border:'0.5px solid black',
-            backgroundColor:'#5CD000',
+            borderRadius: "40px",
+            backgroundColor: "#5CD000",
+            width: "60px",
+            height: "40px",
             color: "white",
-            "&:hover":{
-              backgroundColor:'#5CD000',
-              filter:'brightness(120%)'
-            }
+            "&:hover": {
+              backgroundColor: "#5CD000",
+              filter: "brightness(120%)",
+            },
           }}
         >
           <CheckIcon fontSize="large" />
@@ -141,18 +163,22 @@ const Fila = (props: { style: object; index: number; row: Reparation, onComplete
         sx={{ background: index % 2 == 0 ? "lightgrey" : "white" }}
         align="center"
       >
-        <IconButton sx={{
-            marginBlock: "-10px",
-            border:'0.5px solid black',
-            backgroundColor:'#E91E63',
+        <IconButton
+          sx={{
+            borderRadius: "40px",
+            width: "60px",
+            height: "40px",
+            backgroundColor: "#E91E63",
             color: "white",
-            "&:hover":{
-              backgroundColor:'#E91E63',
-              filter:'brightness(80%)'
-            }
-          }} 
+            "&:hover": {
+              backgroundColor: "#E91E63",
+              filter: "brightness(80%)",
+            },
+          }}
           onClick={onCancel}
-          aria-label="cancel" size="medium">
+          aria-label="cancel"
+          size="medium"
+        >
           <CloseIcon fontSize="large" />
         </IconButton>
       </TableCell>
@@ -160,56 +186,56 @@ const Fila = (props: { style: object; index: number; row: Reparation, onComplete
   );
 };
 
-
-
 const WorkshopPage = () => {
-  const [filtered, setfiltered] = useState<Reparation[]>([]);
-  const [reparations, setReparations] = useState<Reparation[]>([]);
+  const [filtered, setfiltered] = useState<RegReparation[]>([]);
+  const [reparations, setReparations] = useState<RegReparation[]>([]);
+
+  const [repList, setRepList] = useState<Reparation[]>([]);
+
   const [open, setOpen] = React.useState(false);
   const [error, setError] = useState(false);
 
   const [formData, setFormData] = useState({
     patente: "",
-    typeRep: 0,
+    reparationId: "",
   });
 
-  const onCancelRep = (id:number) => {
-    enqueueSnackbar('Se cancelo la reparacion', 
-      { variant:'error'});
+  const onCancelRep = (id: number) => {
+    enqueueSnackbar("Se cancelo la reparacion", { variant: "error" });
 
-    workshopService.deleteReparation(id).then((response) =>{
+    workshopService.deleteReparation(id).then((response) => {
       //console.log(response);
       init();
-    }
-    );
-  }
+    });
+  };
 
-  const onCompleteRep = (id:number) => {
-    workshopService.completeReparation(id).then((response) =>{
+  const onCompleteRep = (id: number) => {
+    workshopService.completeReparation(id).then((response) => {
       //(response);
-      enqueueSnackbar("Se completo la reparación", {variant:'info'})
+      enqueueSnackbar("Se completo la reparación", { variant: "info" });
       init();
-    }
-    );
-  }
+    });
+  };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     workshopService
       .postNewReparation({
-        patente: formData.patente.toUpperCase(),
-        typeRep: (formData.typeRep+1),
+        patente: formData.patente.toLowerCase(),
+        reparationId: formData.reparationId,
       })
       .then(() => {
-        //console.log(response);
         setError(false);
         handleClose();
         init();
         handleSearch("");
-        enqueueSnackbar('La reparación fue creada con éxito', { variant:'success' })
+        enqueueSnackbar("La reparación fue creada con éxito", {
+          variant: "success",
+        });
       })
       .catch(() => setError(true));
   };
-  const handleChange = (event:ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [event.target.name]:
@@ -219,6 +245,11 @@ const WorkshopPage = () => {
     });
   };
   const handleClickOpen = () => {
+    if (repList.length) {
+      setOpen(true);
+      return;
+    }
+    workshopService.getListReps().then((response) => setRepList(response.data));
     setOpen(true);
   };
 
@@ -233,25 +264,19 @@ const WorkshopPage = () => {
       .then((response) => {
         setReparations(response.data);
         setfiltered(response.data);
-        //console.log(response.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setReparations([]);
+        setfiltered([]);
+      });
   };
 
   const handleSearch = (valorBuscado: string) => {
-    console.log(reparations)
+    console.log(reparations);
     const filasFiltradas = reparations.filter((fila) => {
       return (
-        fila.vehiculo.patente
-          .toLowerCase()
-          .includes(valorBuscado.toLowerCase()) ||
-        fila.vehiculo.marca
-          .toLowerCase()
-          .includes(valorBuscado.toLowerCase()) ||
-        fila.vehiculo.modelo
-          .toLowerCase()
-          .includes(valorBuscado.toLowerCase()) ||
-        repTypes[fila.typeRep-1]
+        fila.patente.toLowerCase().includes(valorBuscado.toLowerCase()) ||
+        fila.reparation?.nombre
           .toLowerCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "")
@@ -283,8 +308,8 @@ const WorkshopPage = () => {
           elevation={10}
           square={false}
           sx={{
-            position:'relative',
-            alignContent:"end",
+            position: "relative",
+            alignContent: "end",
             width: "95%",
             height: "90%",
             borderRadius: "25px",
@@ -294,13 +319,13 @@ const WorkshopPage = () => {
             container
             justifyContent={"space-between"}
             width={"95%"}
-            margin={'auto'}
+            margin={"auto"}
             mt={"2%"}
             rowGap={"10px"}
-            position={'absolute'}
-            zIndex={'10'}
-            top={'0%'}
-            left={'3%'}
+            position={"absolute"}
+            zIndex={"10"}
+            top={"0%"}
+            left={"3%"}
           >
             <Grid item xs={12} sm={5} md={4}>
               <Typography fontWeight={800} variant="h5">
@@ -338,11 +363,7 @@ const WorkshopPage = () => {
             </Grid>
           </Grid>
 
-          <Box
-            alignContent={"center"}
-            height={"85%"}
-            justifyContent={"center"}
-          >
+          <Box alignContent={"center"} height={"85%"} justifyContent={"center"}>
             <TableVirtuoso
               style={{ height: "100%", borderRadius: "0 0 25px 25px" }}
               data={filtered}
@@ -355,14 +376,7 @@ const WorkshopPage = () => {
                 >
                   {columns.map((columna, index) => {
                     return (
-                      <TableCell
-                        sx={{
-                          width: columna.width,
-                        }}
-                        key={index}
-                        variant="head"
-                        align="center"
-                      >
+                      <TableCell key={index} variant="head" align="center">
                         {columna.label}
                       </TableCell>
                     );
@@ -372,9 +386,6 @@ const WorkshopPage = () => {
               itemContent={(index, reparation) => {
                 return (
                   <Fila
-                    style={{
-                      background: index % 2 == 0 ? "lightgrey" : "white",
-                    }}
                     onComplete={() => onCompleteRep(reparation.id)}
                     onCancel={() => onCancelRep(reparation.id)}
                     index={index}
@@ -398,6 +409,8 @@ const WorkshopPage = () => {
       >
         <Grid
           container
+          component={"form"} 
+          onSubmit={handleSubmit}
           direction={"column"}
           justifyContent={"space-evenly"}
           alignItems={"center"}
@@ -446,7 +459,6 @@ const WorkshopPage = () => {
           </Grid>
           <Grid item width={"70%"}>
             <TextField
-              // TODO: validar
               required
               fullWidth
               sx={{
@@ -467,18 +479,18 @@ const WorkshopPage = () => {
               select
               required
               label="Selecciona"
-              defaultValue={0}
-              name="typeRep"
-              value={formData.typeRep}
+              defaultValue={""}
+              name="reparationId"
+              value={formData.reparationId}
               onChange={handleChange}
               helperText="Seleccione el tipo de reparacion que se le hara al vehiculo ingresado"
               variant="filled"
               size="small"
               fullWidth
             >
-              {repTypes.map((option, index) => (
-                <MenuItem key={index} value={index}>
-                  {option}
+              {repList.map((option) => (
+                <MenuItem key={option.id} value={option.id}>
+                  {option.nombre}
                 </MenuItem>
               ))}
             </TextField>
@@ -486,7 +498,7 @@ const WorkshopPage = () => {
           <Grid item>
             <Button
               variant="contained"
-              onClick={handleSubmit}
+              type="submit"
               sx={{
                 backgroundColor: "pink.main",
                 borderRadius: "10px",

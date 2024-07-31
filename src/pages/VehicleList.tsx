@@ -18,11 +18,12 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect, useState } from "react";
 import { TableComponents, TableVirtuoso } from "react-virtuoso";
-import { ColumnData, ColumnDataWidth, Receipt } from "../types/types";
+import { ColumnData, ColumnDataWidth, Receipt, Vehicle } from '../types/types';
 import receiptService from "../services/receipt.service";
 import { formatCurrency } from "../utils/utils";
 import { Link } from "react-router-dom";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import vehicleService from "../services/vehicle.service";
 
 const Fila = ({ item: row, ...restProps }) => {
   return (
@@ -34,14 +35,16 @@ const Fila = ({ item: row, ...restProps }) => {
     >
       <TableCell align="center">{row.id}</TableCell>
       <TableCell align="center">{row.patente.toUpperCase()}</TableCell>
-      <TableCell align="center">{row.regReparations?.length}</TableCell>
-      <TableCell align="center">{row.bono ? "Si" : "No"}</TableCell>
-      <TableCell align="center">{row.deliveredAt ? "Si" : "No"}</TableCell>
-      <TableCell style={{ fontWeight: "800" }} align="center">
-        {row.deliveredAt ? formatCurrency(row.total) : "Aun pendiente"}
-      </TableCell>
+      <TableCell align="center">{row.marca.toUpperCase()}</TableCell>
+      <TableCell align="center">{row.modelo.toUpperCase()}</TableCell>
+      <TableCell align="center">{row.tipo.toUpperCase()}</TableCell>
+      <TableCell align="center">{row.motor.toUpperCase()}</TableCell>
+      <TableCell align="center">{row.anofab}</TableCell>
+      <TableCell align="center">{row.nasientos}</TableCell>
+      <TableCell align="center">{row.km}</TableCell>
+
       <TableCell align="center">
-        <Link to={"/pos/boletas/" + row.id}>
+        <Link to={"/pos/vehiculo/" + row.patente}>
           <IconButton
             size="medium"
             aria-label="complete"
@@ -65,7 +68,7 @@ const Fila = ({ item: row, ...restProps }) => {
   );
 };
 
-const VirtuosoTableComponents: TableComponents<Receipt> = {
+const VirtuosoTableComponents: TableComponents<Vehicle> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
     <TableContainer component={Box} {...props} ref={ref} />
   )),
@@ -85,43 +88,55 @@ const columns: ColumnData[] = [
     label: "Patente",
   },
   {
-    label: "Cantidad de reparaciones",
+    label: "Marca",
   },
   {
-    label: "Bono",
+    label: "Modelo",
   },
   {
-    label: "Pagado",
+    label: "Tipo",
   },
   {
-    label: "Costo Total",
+    label: "Motor",
   },
   {
-    label: "Ir al recibo",
+    label: "Año",
+  },
+  {
+    label: "N° asientos",
+  },
+  {
+    label: "Kilometraje",
+  },
+  {
+    label: "Ir a detalles",
   },
 ];
 
-const ReceiptHistoryPage = () => {
-  const [filtered, setfiltered] = useState<Receipt[]>([]);
-  const [reparations, setReparations] = useState<Receipt[]>([]);
+const VehicleListPage = () => {
+  const [filtered, setfiltered] = useState<Vehicle[]>([]);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
 
   const init = () => {
-    receiptService
-      .getReceipts()
+    vehicleService
+      .getVehicles()
       .then((response) => {
-        setReparations(response.data);
+        setVehicles(response.data);
         setfiltered(response.data);
-        //console.log(response.data);
       })
       .catch((error) => console.log(error));
   };
 
   const handleSearch = (valorBuscado: string) => {
-    const filasFiltradas = reparations.filter((fila) => {
+    const filasFiltradas = vehicles.filter((fila) => {
       return (
         (fila.patente
           ? fila.patente.toLowerCase().includes(valorBuscado.toLowerCase())
-          : "") || fila.id.toString().includes(valorBuscado)
+          : "") || fila.marca.toLowerCase().includes(valorBuscado.toLowerCase())
+          || fila.modelo.toLowerCase().includes(valorBuscado.toLowerCase())
+          || fila.anofab.toString().includes(valorBuscado.toLowerCase())
+          || fila.tipo.toLowerCase().includes(valorBuscado.toLowerCase())
+          || fila.motor.toLowerCase().includes(valorBuscado.toLowerCase())
       );
     });
     setfiltered(filasFiltradas);
@@ -133,9 +148,11 @@ const ReceiptHistoryPage = () => {
 
   return (
     <>
-      <Grid className="boletas-grid">
+      <Grid className="boletas-grid" justifySelf={'center'} alignSelf={'center'}
+      height={'90%'}
+      >
         <Paper
-          className= "boletas-paper"
+          className="boletas-paper"
           elevation={10}
           sx={{
             height: "90%",
@@ -149,8 +166,11 @@ const ReceiptHistoryPage = () => {
           <Typography
             fontWeight={800}
             variant="h5"
+            style={{
+              gridColumn: 2,
+            }}
           >
-            Historial de boletas
+            Historial de Vehiculos
             <Divider
               variant="fullWidth"
               sx={{
@@ -181,7 +201,7 @@ const ReceiptHistoryPage = () => {
           ></TextField>
 
           <TableVirtuoso
-            style={{ gridColumn: "1 / -1"   }}
+            style={{ gridColumn: "1 / -1" }}
             data={filtered}
             components={VirtuosoTableComponents}
             overscan={5}
@@ -206,4 +226,4 @@ const ReceiptHistoryPage = () => {
     </>
   );
 };
-export default ReceiptHistoryPage;
+export default VehicleListPage;

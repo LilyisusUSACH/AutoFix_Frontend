@@ -1,18 +1,19 @@
 import httpClient from "../http-common"
 
 const getBonos = () => {
-    return httpClient.get('/api/bono/disp');
+    return httpClient.get('/recibos/bono/disp');
 }
+
+const getBonosByMarca = (marca) => {
+    return httpClient.get(`/recibos/bono/marcaDisp?marca=${marca}`);
+}
+
 const getBonosUsados = () => {
-    return httpClient.get('/api/bono/');
+    return httpClient.get('/recibos/bono/history');
 }
 
 const postNewBono = (data) => {
-    return httpClient.post('/api/bono/',data);
+    return httpClient.post('/recibos/bono/',data);
 }
 
-const lala = (data) => {
-    return httpClient.get('lala')
-;}
-
-export default {getBonos, getBonosUsados, postNewBono};
+export default {getBonos,getBonosByMarca, getBonosUsados, postNewBono};

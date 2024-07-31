@@ -1,15 +1,19 @@
 import httpClient from "../http-common";
 
+const getVehicles = () => {
+  return httpClient.get(`/vehiculos/`);
+};
+
 const getVehicleById = (id) => {
-  return httpClient.get(`/api/vehicle/${id}`);
+  return httpClient.get(`/vehiculos/${id}`);
 };
 
 const getVehicleByPatente = (patente) => {
-  return httpClient.get(`/api/vehicle/patente?patente=${patente}`);
+  return httpClient.get(`/vehiculos/ByPatente?patente=${patente}`);
 };
 
 const postNewVehicle = (data) => {
-  return httpClient.post("/api/vehicle/", data);
+  return httpClient.post("/vehiculos/", data);
 };
 
-export default { getVehicleById, getVehicleByPatente, postNewVehicle };
+export default {getVehicles, getVehicleById, getVehicleByPatente, postNewVehicle };

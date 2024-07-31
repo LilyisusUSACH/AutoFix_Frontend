@@ -1,57 +1,50 @@
-.CardContent{
+.CardContent {
   color: white;
   height: 100%;
-  position:relative;
+  position: relative;
   cursor: pointer;
   padding: 30px;
   transition: 300ms;
 
-  &:hover, &:active
-  {
-      background-color: darkblue;
+  &:hover,
+  &:active {
+    background-color: darkblue;
 
-      .ViewButton
-      {
-          background-color: grey;
-          color: darkred;
-      }
+    .ViewButton {
+      background-color: grey;
+      color: darkred;
+    }
   }
-  .Title
-  {
-      font-size: 30px;
-      font-weight: 500;
-      color: white;
+  .Title {
+    font-size: 30px;
+    font-weight: 500;
+    color: white;
   }
 
-  .Caption
-  {
-      margin-top: 10px;
-      font-size: 18px;
-      color: white;
+  .Caption {
+    margin-top: 10px;
+    font-size: 18px;
+    color: white;
   }
 
-  .ViewButton
-  {
-      margin-top: 40px;
-      color: white;
+  .ViewButton {
+    margin-top: 40px;
+    color: white;
 
-      font-size: 25px;
-      border: 3px solid white;
-      text-transform: capitalize;
+    font-size: 25px;
+    border: 3px solid white;
+    text-transform: capitalize;
 
-      transition: 200ms;
+    transition: 200ms;
   }
 }
 
-.lala{
+.lala.rotateDown {
+  animation: spinDown 50s linear infinite;
 }
 
-.lala.rotateDown{
-    animation: spinDown 50s linear infinite
-}
-
-.lala.rotateUp{
-    animation: spinUp 50s linear infinite
+.lala.rotateUp {
+  animation: spinUp 50s linear infinite;
 }
 
 @keyframes spinUp {
@@ -63,10 +56,76 @@
   }
 }
 @keyframes spinDown {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0);
   }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+thead > tr > th {
+  font-size: 0.93rem !important;
+  font-weight: 800 !important;
+}
+
+.boletas-grid {
+  display: grid;
+  place-content: center;
+  align-items: center;
+  grid-template-columns: 95vw;
+  grid-template-rows: 100%;
+}
+
+.boletas-paper {
+  grid-template-columns: 0px 1fr 0px;
+  grid-template-rows: min-content min-content auto;
+  gap: 20px;
+}
+.boletas-paper > * {
+  grid-column: 2;
+}
+
+@media screen and (width > 800px) {
+  .boletas-grid {
+    grid-template-columns: 65vw;
+  }
+  .boletas-paper {
+    grid-template-columns: 0px 1fr 1fr 0px;
+    grid-template-rows: max-content auto;
+  }
+  .boletas-paper > :nth-child(1) {
+    grid-column: 2;
+  }
+  .boletas-paper > * {
+    grid-column: auto;
+  }
+}
+.MuiListItem-root > a {
+  text-decoration: none;
+  color: black;
+  transition: all 0.3s ease-in;
+}
+
+.MuiListItem-root > a:hover {
+  scale: 1.1;
+  background-color: lightgray;
+}
+
+.dateForm .MuiInputBase-root {
+  border-radius: 10px 0px 0px 10px;
+}
+
+.dateForm > .MuiButtonBase-root{
+  border-radius: 0px 10px 10px 0px !important;
+  height: auto;
+  color: #1EBD96;
+  border: 1px solid  #1EBD96;
+  transition: all 0.5s ease-in-out;
+  &:hover{
+    scale: 1.01;
+    background-color: #1EBD96;
+    color: white;
+    border: 1px solid  #1EBD96;
+  }
+} 

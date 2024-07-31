@@ -8,11 +8,10 @@ import PosPage from "../pages/PosPage";
 import BoletaPage from "../pages/BoletaPage";
 import VehiclePage from "../pages/VehiclePage";
 import BonosPage from "../pages/BonosPage";
-import Reporte1Page from "../pages/Reporte1Page";
-import Reporte2Page from "../pages/Reporte2Page";
-import Reporte3Page from "../pages/Reporte3Page";
-import Reporte4Page from "../pages/Reporte4Page";
 import ReceiptHistoryPage from "../pages/BoletasHistoryPage";
+import VehicleListPage from "../pages/VehicleList";
+import ReportOnePage from "../pages/ReportOnePage";
+import ReportTwoPage from "../pages/ReportTwoPage";
 
 const actionar = (snackbarID) => (
   <React.Fragment>
@@ -37,20 +36,21 @@ const PosRouter = () => {
   return (
     <SnackbarProvider maxSnack={3} autoHideDuration={3600} action={actionar}>
       <ThemeProvider theme={theme}>
-        <div>
+        <>
           <NavBarVariantPos />
           <Routes>
+            // TODO: Implementar boletas como tabla
             <Route path="/boletas/" element={<ReceiptHistoryPage />} />
             <Route path="/boletas/:id" element={<BoletaPage />} />
-            <Route path="/vehiculo/:id" element={<VehiclePage />} />
+            <Route path="/vehiculo/" element={<VehicleListPage />} />
+            <Route path="/vehiculo/:patente" element={<VehiclePage />} />
             <Route path="/bonos/" element={<BonosPage />} />
-            <Route path="/reporte/1" element={<Reporte1Page />} />
-            <Route path="/reporte/2" element={<Reporte2Page />} />
-            <Route path="/reporte/3" element={<Reporte3Page />} />
-            <Route path="/reporte/4" element={<Reporte4Page />} />
+            <Route path="/reporte/1" element={<ReportOnePage />} />
+            <Route path="/reporte/2" element={<ReportTwoPage />} />
+
             <Route path="/" element={<PosPage />} />
           </Routes>
-        </div>
+        </>
       </ThemeProvider>
     </SnackbarProvider>
   );

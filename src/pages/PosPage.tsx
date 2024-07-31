@@ -19,7 +19,7 @@ const PosPage = () => {
     vehicleService
       .getVehicleByPatente(patente.toLowerCase())
       .then((response) => {
-        navigate("/pos/vehiculo/" + response.data.id);
+        navigate("/pos/vehiculo/" + response.data.patente);
         enqueueSnackbar("Vehiculo encontrado", { variant: "info" });
       })
       .catch(() => {

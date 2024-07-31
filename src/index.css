@@ -4,7 +4,9 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
-
+* {
+  box-sizing: border-box;
+}
 body, html {
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;

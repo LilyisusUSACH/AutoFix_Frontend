@@ -1,56 +1,97 @@
+import { register } from "module";
+
 export interface Vehicle {
-  carType?: string;
-  fabricationYear?: string;
-  id?: number | null;
-  kmRecorridos?: number;
-  marca?: string;
-  modelo?: string;
-  motorType?: string;
-  nasientos?: number;
-  patente?: string;
+	id: number;
+	patente: string;
+	marca: string;
+	modelo: string;
+	anofab: number;
+	km: number;
+	tipo: string;
+	motor: string;
+	nasientos: number;
+}
+
+export interface Detail {
+	description: string;
+	value: number;
+	percent: number;
 }
 
 export interface Bono {
-  id?: number | null;
-  marca?: string;
-  usado?: boolean;
-  amount?: number;
-  receiptId?: number;
-}
-
-export interface Details {
-  id?: number | null;
-  description?: string;
-  value?: number;
-  percent?: number;
-}
-
-export interface Receipt {
-  id?: number;
-  patente?: Vehicle;
-  reparaciones?: Reparation[];
-  bono?: Bono | null;
-  details?: Details[];
-  retirado?: boolean;
-  pagado?: boolean;
-  costoTotal?: number;
+	id: number;
+	marca: string;
+	usado: boolean;
+	amount: number;
+	receiptId?: number;
 }
 
 export interface Reparation {
-  fechaIngreso: string;
-  fechaRetiro: string;
-  fechaSalida: string;
-  horaIngreso: string;
-  horaRetiro: string;
-  horaSalida: string;
-  id: number;
-  montoTotal: number;
-  receipt_id: number;
-  typeRep: number;
-  vehiculo: Vehicle;
+	id: number;
+	nombre: string;
+	descripcion: string;
+	gasValue: number;
+	dieselValue: number;
+	hibridoValue: number;
+	electricoValue: number;
+}
+
+export interface RegReparation {
+	id: number;
+	patente: string;
+	receipt: number;
+	reparationId: number;
+	reparation?: Reparation;
+	createdAt: string;
+	completedAt?: any;
+	amount: number;
+}
+
+export interface Receipt{
+	id: number;
+	vehicle: Vehicle;
+	patente: string;
+	details: Detail[];
+	bono?: Bono;
+	regReparations: RegReparation[];
+	deliveredAt?: string;
+	sumaRep: number;
+	total: number;
 }
 
 export interface ColumnData {
-  label: string;
-  width: number;
+	label: string;
+}
+
+export interface ColumnDataWidth {
+	label: string;
+	width: number;
+}
+
+
+export interface Register {
+	count: number;
+	amount: number;
+}
+
+export interface RepOneReg{
+	name: string;
+	sedan: Register;
+	hatchback: Register;
+	suv: Register;
+	pickup: Register;
+	furgoneta: Register;
+	total: Register;
+}
+
+
+export interface RepTwoReg{
+	name: string;
+	month: Register;
+	varOneQty: number;
+	varOneAmount: number;
+	prevMonth: Register;
+	varTwoQty: number;
+	varTwoAmount: number;
+	prevPMonth: Register;
 }

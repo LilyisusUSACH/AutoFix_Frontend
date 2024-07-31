@@ -54,7 +54,7 @@ const NavBar = () => {
             </Box>
             <Link to={"/"}>
               <img
-                style={{ marginRight: "10px", pointerEvents: "none" }}
+                style={{marginTop:"2px",marginRight: "10px", pointerEvents: "none" }}
                 src={logoiconYellow}
               />
             </Link>

@@ -14,15 +14,15 @@ import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 
 const NewVehiclePage = () => {
-  const [vehiculo, setVehicle] = useState({
+  const [vehiculo, setVehicle] = useState<Vehicle>({
+    id: null,
     patente: '',
     marca:'',
     modelo:'',
-    motorType:0,
-    carType: 0,
-    fabricationYear:'',
-    id: null,
-    kmRecorridos:0,
+    anofab:0,
+    km:0,
+    tipo:'',
+    motor: '',
     nasientos:0,
   });
 
@@ -42,7 +42,7 @@ const NewVehiclePage = () => {
 
   const handleChange = (event:ChangeEvent<HTMLInputElement>) => {
     setVehicle({
-      ...vehiculo, [event.target.name]:event.target.value,
+      ...vehiculo, [event.target.name]: event.target.value.toLowerCase(),
     })
   };
   const navigate = useNavigate();
@@ -52,7 +52,6 @@ const NewVehiclePage = () => {
     for(const key in vehiculo){
       if((vehiculo[key as keyof Vehicle] === "")) comprobation = false;
     }
-    console.log(comprobation)
     if (comprobation)
      vehicleService.postNewVehicle(vehiculo).then(() => {
       enqueueSnackbar("Se añadio un nuevo vehiculo", {variant:'success'})
@@ -146,8 +145,9 @@ const NewVehiclePage = () => {
               <TextField
                 required
                 sx={{width:'45%', margin:'auto'}}
-                name="kmRecorridos"
-                value={vehiculo.kmRecorridos}
+                type="number"
+                name="km"
+                value={vehiculo.km}
                 onChange={handleChange}
                 label="Kilometros Recorridos"
                 variant="filled"
@@ -178,31 +178,31 @@ const NewVehiclePage = () => {
                 required
                 id="filled-select-currency"
                 select
-                name="carType"
+                name="tipo"
                 defaultValue={0}
-                value={vehiculo.carType}
+                value={vehiculo.tipo}
                 sx={{width:'45%', margin:'auto'}}
                 label="Tipo de vehiculo"
                 variant="filled"
                 onChange={handleChange}
               >
                 {carTypes.map((item, index) => (
-                  <MenuItem key={index} value={index}>{item.toUpperCase()}</MenuItem>
+                  <MenuItem key={index} value={item}>{item.toUpperCase()}</MenuItem>
                 ))}
               </TextField>
               <TextField
                 sx={{width:'45%', margin:'auto'}}
                 select
                 required
-                value={vehiculo.motorType}
+                value={vehiculo.motor}
                 defaultValue={0}
                 onChange={handleChange}
-                name="motorType"
+                name="motor"
                 label="Tipo de Motor"
                 variant="filled"
               >
                 {motorTypes.map((item, index) => (
-                  <MenuItem key={index} value={index}>{item.toUpperCase()}</MenuItem>
+                  <MenuItem key={index} value={item}>{item.toUpperCase()}</MenuItem>
                 ))}
               </TextField>
             </Grid>
@@ -210,8 +210,8 @@ const NewVehiclePage = () => {
               <TextField
                 required
                 sx={{width:'45%', margin:'auto'}}
-                name="fabricationYear"
-                value={vehiculo.fabricationYear}
+                name="anofab"
+                value={vehiculo.anofab}
                 onChange={handleChange}
                 label="Año de fabricacion"
                 variant="filled"

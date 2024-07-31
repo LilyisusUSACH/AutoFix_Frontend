@@ -66,8 +66,17 @@ const BonosPage = () => {
 
   return (
     <>
-      <Grid container minHeight={"89vh"} justifyContent={"center"}>
-        <Grid item xs={12} md={4} minHeight={"80vh"} marginBlock={"40px"}>
+      <Grid
+        container
+        justifyContent={"center"}
+        alignItems={"center"}
+        sx={{
+          "@media (width < 900px)": {
+            marginTop: "20px",
+          },
+        }}
+      >
+        <Grid item xs={12} md={4}>
           <Paper
             sx={{
               position: "relative",
@@ -95,7 +104,7 @@ const BonosPage = () => {
                   <TableRow>
                     <TableCell width={"10%"}>Id</TableCell>
                     <TableCell align="center">Marca</TableCell>
-                    <TableCell align="right">amount</TableCell>
+                    <TableCell align="right">Monto descuento</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -166,7 +175,7 @@ const BonosPage = () => {
                   <TableRow>
                     <TableCell width={"10%"}>Id</TableCell>
                     <TableCell align="center">Marca</TableCell>
-                    <TableCell align="right">amount</TableCell>
+                    <TableCell align="right">Monto descuento</TableCell>
                     <TableCell width={"30%"} align="center">
                       Ir a boleta
                     </TableCell>
@@ -183,10 +192,10 @@ const BonosPage = () => {
                         {formatCurrency(bono.amount)}
                       </TableCell>
                       <TableCell width={"30%"} align="center">
-                        <Link to={"/pos/boletas/"+bono.receiptId}>
-                        <Button variant="contained" size="small">
-                          Ir a la boleta
-                        </Button>
+                        <Link to={"/pos/boletas/" + bono.receiptId}>
+                          <Button variant="contained" size="small">
+                            Ir a la boleta
+                          </Button>
                         </Link>
                       </TableCell>
                     </TableRow>

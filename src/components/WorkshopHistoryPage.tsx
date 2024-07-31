@@ -24,14 +24,12 @@ import workshopService from "../services/workshop.service";
 import { repTypes } from "../constants";
 import { TableComponents, TableVirtuoso } from "react-virtuoso";
 import { Link } from "react-router-dom";
-import { Reparation, ColumnData } from "../types/types";
-import { formatCurrency } from "../utils/utils";
-
-// TODO: Separar Por componentes lo que se pueda
+import { Reparation, ColumnData, RegReparation } from "../types/types";
+import { formatCurrency, formatDateTime } from '../utils/utils';
 
 const ExpandableRow = ({ context, item: user, ...restProps }) => {
-  //console.log(user)
   const isExpanded = context.getIsExpanded(user);
+  console.log(user)
   return (
     <>
       <TableRow
@@ -40,7 +38,6 @@ const ExpandableRow = ({ context, item: user, ...restProps }) => {
         style={{
           background: restProps["data-index"] % 2 == 0 ? "lightgrey" : "white",
         }}
-        key={user.id}
       >
         <Fila expanded={isExpanded} row={user}></Fila>
       </TableRow>
@@ -98,7 +95,7 @@ const ExpandableRow = ({ context, item: user, ...restProps }) => {
                 <Divider></Divider>
                 <Grid container justifyContent={"space-around"}>
                   <Grid item xs={2}>
-                    <Link to={"/pos/boletas/" + user.receipt_id}>
+                    <Link to={"/pos/boletas/" + user.receipt}>
                       <IconButton
                         sx={{
                           margin: "auto",
@@ -118,7 +115,7 @@ const ExpandableRow = ({ context, item: user, ...restProps }) => {
                     </Link>
                   </Grid>
                   <Grid item xs={3}>
-                    <Link to={"/pos/vehiculo/" + user.vehiculo.id}>
+                    <Link to={"/pos/vehiculo/" + user.patente}>
                       <IconButton
                         sx={{
                           margin: "auto",
@@ -157,7 +154,7 @@ const ExpandableRow = ({ context, item: user, ...restProps }) => {
   );
 };
 
-const VirtuosoTableComponents: TableComponents<Reparation> = {
+const VirtuosoTableComponents: TableComponents<RegReparation> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
     <TableContainer component={Box} {...props} ref={ref} />
   )),
@@ -168,7 +165,7 @@ const VirtuosoTableComponents: TableComponents<Reparation> = {
     />
   ),
   TableHead,
-      // @ts-ignore
+  // @ts-ignore
   TableRow: ExpandableRow,
   TableBody: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
     <TableBody {...props} ref={ref} />
@@ -205,25 +202,23 @@ const columns: ColumnData[] = [
     label: "",
   },
 ];
-// TODO: poner botones y crear los update / delete
-// TODO: arreglar fuentes
-const Fila = (props: { expanded: boolean; row: Reparation }) => {
+const Fila = (props: { expanded: boolean; row: RegReparation }) => {
   const { row, expanded } = props;
   //console.log(typeof(onComplete));
   return (
     <>
       <TableCell align="center" component="th" scope="row">
-        {row.vehiculo.patente.toUpperCase()}
+        {row.patente.toUpperCase()}
       </TableCell>
-      <TableCell align="center">{row.vehiculo.marca.toUpperCase()}</TableCell>
-      <TableCell align="center">{row.vehiculo.modelo.toUpperCase()}</TableCell>
-      <TableCell align="center">{repTypes[row.typeRep - 1]}</TableCell>
+      <TableCell align="center">{row.patente.toUpperCase()}</TableCell>
+      <TableCell align="center">{row.patente.toUpperCase()}</TableCell>
+      <TableCell align="center">{row.reparation.nombre}</TableCell>
       <TableCell align="center">
-        {row.fechaIngreso + " " + row.horaIngreso.slice(0, 5)}
+        {formatDateTime(row.createdAt)}
       </TableCell>
       <TableCell align="center">
-        {row.fechaSalida
-          ? row.fechaSalida + " " + row.horaSalida
+        {row.completedAt
+          ? formatDateTime(row.completedAt)
           : "Aun en taller"}
       </TableCell>
       <TableCell align="center">
@@ -248,10 +243,9 @@ const Fila = (props: { expanded: boolean; row: Reparation }) => {
 };
 
 const WorkshopHistoryPage = () => {
-  const [filtered, setfiltered] = useState<Reparation[]>([]);
-  const [reparations, setReparations] = useState<Reparation[]>([]);
+  const [filtered, setfiltered] = useState<RegReparation[]>([]);
+  const [reparations, setReparations] = useState<RegReparation[]>([]);
   const [expandedIds, setExpandedIds] = useState<number[]>([]);
-  const [openRow, setOpenRow] = useState(false);
 
   const handleScroll = () => {
     console.log("handleScroll");
@@ -274,7 +268,6 @@ const WorkshopHistoryPage = () => {
       .then((response) => {
         setReparations(response.data);
         setfiltered(response.data);
-        //console.log(response.data);
       })
       .catch((error) => console.log(error));
   };
@@ -282,16 +275,10 @@ const WorkshopHistoryPage = () => {
   const handleSearch = (valorBuscado: string) => {
     const filasFiltradas = reparations.filter((fila) => {
       return (
-        fila.vehiculo.patente
+        fila.patente
           .toLowerCase()
           .includes(valorBuscado.toLowerCase()) ||
-        fila.vehiculo.marca
-          .toLowerCase()
-          .includes(valorBuscado.toLowerCase()) ||
-        fila.vehiculo.modelo
-          .toLowerCase()
-          .includes(valorBuscado.toLowerCase()) ||
-        repTypes[fila.typeRep - 1]
+        fila.reparation?.nombre
           .toLowerCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "")

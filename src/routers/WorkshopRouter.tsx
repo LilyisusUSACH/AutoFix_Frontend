@@ -5,7 +5,7 @@ import { IconButton, ThemeProvider, createTheme } from '@mui/material';
 import { SnackbarProvider, closeSnackbar } from 'notistack';
 import CloseIcon from "@mui/icons-material/Close";
 import React from 'react';
-import NewVehiclePage from '../components/NewVehiclePage';
+import NewVehiclePage from '../pages/NewVehiclePage';
 import WorkshopHistoryPage from '../components/WorkshopHistoryPage';
 
 // @ts-ignore

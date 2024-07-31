@@ -8,8 +8,6 @@ import {
 import { useNavigate, Link } from "react-router-dom";
 
 const NavBarVariant = () => {
-  const navigate = useNavigate();
-
   return (
     <AppBar
       position="static"
