@@ -174,31 +174,24 @@ const VirtuosoTableComponents: TableComponents<RegReparation> = {
 
 const columns: ColumnData[] = [
   {
-    width: 40,
     label: "Patente",
   },
   {
-    width: 80,
     label: "Marca",
   },
   {
-    width: 50,
     label: "Modelo",
   },
   {
-    width: 150,
     label: "Tipo de reparacion",
   },
   {
-    width: 80,
     label: "Fecha inicio",
   },
   {
-    width: 80,
     label: "Fecha Termino",
   },
   {
-    width: 40,
     label: "",
   },
 ];
@@ -385,9 +378,6 @@ const WorkshopHistoryPage = () => {
                   {columns.map((columna, index) => {
                     return (
                       <TableCell
-                        sx={{
-                          width: columna.width,
-                        }}
                         key={index}
                         variant="head"
                         align="center"

@@ -7,7 +7,6 @@ import { green } from "@mui/material/colors";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import ServiciosPage from "../components/ServiciosPage";
 import ContactosPage from "../components/ContactosPage";
-import { ExamplePage } from "../pages/examplePage";
 
 const theme = createTheme({
   typography: {
